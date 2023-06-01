@@ -4,10 +4,13 @@ import { useEffect } from 'react';
 import { useLayerStore } from '../store/LayerStore';
 import { PointsData } from '../models/pointsData';
 import { MaterialData } from '../models/materialData';
+import { Loader } from '../components/Loader/Loader';
 
 export default function Home() {
-	const { data: points } = useFirebase<PointsData>('points');
-	const { data: materials } = useFirebase<MaterialData>('materials');
+	const { data: points, loading: loadingPoints } =
+		useFirebase<PointsData>('points');
+	const { data: materials, loading: loadingMaterials } =
+		useFirebase<MaterialData>('materials');
 
 	const { setMaterials, setPoints } = useLayerStore();
 
@@ -25,10 +28,16 @@ export default function Home() {
 
 	return (
 		<div className='flex flex-col gap-4 items-center justify-center min-h-screen py-2 bg-[#CDC3BD]'>
-			<h1 className='text-lg md:text-2xl font-bold'>
-				ESTUDIO CACTUS VISUALIZER TEST
-			</h1>
-			<Layout />
+			{loadingPoints || loadingMaterials ? (
+				<Loader />
+			) : (
+				<>
+					<h1 className='text-lg md:text-2xl font-bold'>
+						ESTUDIO CACTUS VISUALIZER TEST
+					</h1>
+					<Layout />
+				</>
+			)}
 		</div>
 	);
 }

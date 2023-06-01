@@ -1,27 +1,7 @@
 import { create } from 'zustand';
 import { PointsData } from '../models/pointsData';
 import { Layers, MaterialData } from '../models/materialData';
-
-interface State {
-	roomPicture: string;
-	selectedPoint: PointsData | null;
-	points: PointsData[] | null;
-	materials: MaterialData[] | null;
-	materialsToSelect: MaterialData[] | null;
-	selectedMaterial: MaterialData | null;
-	displayMaterials: Layers | null;
-	currentMaterials: Layers | null;
-}
-
-interface Actions {
-	setSelectedPoint: (point: PointsData | null) => void;
-	setPoints: (points: PointsData[]) => void;
-	setMaterials: (materials: MaterialData[]) => void;
-	setMaterialsToSelect: (materials: MaterialData[] | null) => void;
-	setSelectedMaterial: (material: MaterialData) => void;
-	setDisplayMaterials: (layer: Layers) => void;
-	setCurrentMaterials: (material: Layers) => void;
-}
+import { Actions, State } from '../models/LayerStateModel';
 
 export const useLayerStore = create<State & Actions>(set => ({
 	roomPicture:

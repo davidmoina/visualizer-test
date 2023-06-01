@@ -6,9 +6,11 @@ type CollectionType = 'points' | 'materials';
 
 export const useFirebase = <T>(collectionName: CollectionType) => {
 	const [data, setData] = useState<T[] | null>(null);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		(async () => {
+			setLoading(true);
 			const docRef = query(collection(db, collectionName));
 			const querySnapshot = await getDocs(docRef);
 			const result = querySnapshot.docs.map(doc => {
@@ -19,8 +21,9 @@ export const useFirebase = <T>(collectionName: CollectionType) => {
 			});
 
 			setData(result);
+			setLoading(false);
 		})();
 	}, []);
 
-	return { data };
+	return { data, loading };
 };

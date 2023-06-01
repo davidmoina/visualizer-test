@@ -3,17 +3,29 @@ import { PointsData } from '../../models/pointsData';
 import { useLayerStore } from '../../store/LayerStore';
 import { PointToSelect } from '../PointToSelect/PointToSelect';
 import { useState } from 'react';
+import { shallow } from 'zustand/shallow';
 
 export const MainPicture = () => {
 	const [isSelected, setIsSelected] = useState(false);
+
 	const {
-		setSelectedPoint,
 		points,
 		materials,
 		roomPicture,
-		setMaterialsToSelect,
 		displayMaterials,
-	} = useLayerStore();
+		materialsToSelect,
+	} = useLayerStore(
+		state => ({
+			points: state.points,
+			materials: state.materials,
+			roomPicture: state.roomPicture,
+			displayMaterials: state.displayMaterials,
+			materialsToSelect: state.materialsToSelect,
+		}),
+		shallow
+	);
+
+	const { setSelectedPoint, setMaterialsToSelect } = useLayerStore();
 
 	const handleSelectedPoint = (point: PointsData) => {
 		setSelectedPoint(point);
@@ -43,6 +55,11 @@ export const MainPicture = () => {
 				src={roomPicture}
 				alt='room picture'
 			/>
+			{materialsToSelect && (
+				<p className='absolute -bottom-4 left-6 text-xs text-slate-700'>
+					Click on the image to choose another section
+				</p>
+			)}
 			{points &&
 				!isSelected &&
 				points.map(point => (
