@@ -1,5 +1,5 @@
 import { MaterialData } from '../../models/materialData';
-// import { useLayerStore } from '../../store/LayerStore';
+import { useLayerStore } from '../../store/LayerStore';
 
 interface Props {
 	name: string;
@@ -8,10 +8,12 @@ interface Props {
 }
 
 export const MaterialCard = ({ name, image, material }: Props) => {
-	// const {setSelectedMaterial} = useLayerStore()
+	const { displayMaterials, setDisplayMaterials } = useLayerStore();
+
+	console.log(displayMaterials);
 
 	const onSelectMaterial = () => {
-		console.log(material);
+		setDisplayMaterials(material.layers);
 	};
 
 	return (

@@ -11,7 +11,7 @@ export const MainPicture = () => {
 		points,
 		materials,
 		roomPicture,
-		setDisplayMaterials,
+		setMaterialsToSelect,
 	} = useLayerStore();
 
 	const handleSelectedPoint = (point: PointsData) => {
@@ -21,7 +21,7 @@ export const MainPicture = () => {
 		);
 
 		if (filteredMaterials) {
-			setDisplayMaterials(filteredMaterials);
+			setMaterialsToSelect(filteredMaterials);
 		}
 
 		setIsSelected(true);
@@ -31,7 +31,7 @@ export const MainPicture = () => {
 		if (isSelected) {
 			setIsSelected(false);
 			setSelectedPoint(null);
-			setDisplayMaterials(null);
+			setMaterialsToSelect(null);
 		}
 	};
 

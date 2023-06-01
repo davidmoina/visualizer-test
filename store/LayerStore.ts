@@ -1,22 +1,24 @@
 import { create } from 'zustand';
 import { PointsData } from '../models/pointsData';
-import { MaterialData } from '../models/materialData';
+import { Layers, MaterialData } from '../models/materialData';
 
 interface State {
 	roomPicture: string;
 	selectedPoint: PointsData | null;
 	points: PointsData[] | null;
 	materials: MaterialData[] | null;
-	displayMaterials: MaterialData[] | null;
+	materialsToSelect: MaterialData[] | null;
 	selectedMaterial: MaterialData | null;
+	displayMaterials: Layers | null;
 }
 
 interface Actions {
 	setSelectedPoint: (point: PointsData | null) => void;
 	setPoints: (points: PointsData[]) => void;
 	setMaterials: (materials: MaterialData[]) => void;
-	setDisplayMaterials: (materials: MaterialData[] | null) => void;
+	setMaterialsToSelect: (materials: MaterialData[] | null) => void;
 	setSelectedMaterial: (material: MaterialData) => void;
+	setDisplayMaterials: (layer: Layers) => void;
 }
 
 export const useLayerStore = create<State & Actions>(set => ({
@@ -25,8 +27,9 @@ export const useLayerStore = create<State & Actions>(set => ({
 	selectedPoint: null,
 	points: null,
 	materials: null,
-	displayMaterials: null,
+	materialsToSelect: null,
 	selectedMaterial: null,
+	displayMaterials: null,
 	setSelectedPoint: (point: PointsData | null) =>
 		set(state => ({
 			...state,
@@ -42,14 +45,21 @@ export const useLayerStore = create<State & Actions>(set => ({
 			...state,
 			materials,
 		})),
-	setDisplayMaterials: (materials: MaterialData[] | null) =>
+	setMaterialsToSelect: (materials: MaterialData[] | null) =>
 		set(state => ({
 			...state,
-			displayMaterials: materials,
+			materialsToSelect: materials,
 		})),
 	setSelectedMaterial: (material: MaterialData | null) =>
 		set(state => ({
 			...state,
 			selectedMaterial: material,
+		})),
+	setDisplayMaterials: (layer: Layers) =>
+		set(state => ({
+			...state,
+			displayMaterials: state.displayMaterials
+				? { ...state.displayMaterials, ...layer }
+				: { ...layer },
 		})),
 }));
