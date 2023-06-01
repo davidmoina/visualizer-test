@@ -15,10 +15,10 @@ export const useFirebase = <T>(collectionName: CollectionType) => {
 				return {
 					id: doc.id,
 					...doc.data(),
-				};
+				} as T;
 			});
 
-			setData(result as T[]);
+			setData(result);
 		})();
 	}, []);
 
