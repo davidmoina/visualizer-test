@@ -12,6 +12,7 @@ export const MainPicture = () => {
 		materials,
 		roomPicture,
 		setMaterialsToSelect,
+		displayMaterials,
 	} = useLayerStore();
 
 	const handleSelectedPoint = (point: PointsData) => {
@@ -36,7 +37,7 @@ export const MainPicture = () => {
 	};
 
 	return (
-		<div className='relative' onClick={unselectPoint}>
+		<div className='relative rounded-md' onClick={unselectPoint}>
 			<img
 				className='rounded-md w-full max-w-5xl'
 				src={roomPicture}
@@ -52,6 +53,15 @@ export const MainPicture = () => {
 						coordX={point.coordX}
 						coordY={point.coordY}
 						point={point}
+					/>
+				))}
+			{displayMaterials &&
+				Object.entries(displayMaterials).map(([key, value]) => (
+					<img
+						key={key}
+						className='absolute w-full max-w-5xl top-0 rounded-md'
+						src={value}
+						alt=''
 					/>
 				))}
 		</div>

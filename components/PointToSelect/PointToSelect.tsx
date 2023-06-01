@@ -1,6 +1,5 @@
 import { GrRadialSelected } from 'react-icons/gr';
 import { PointsData } from '../../models/pointsData';
-// import { PointsData } from '../../models/pointsData';
 
 interface Props {
 	id: string;
@@ -19,7 +18,7 @@ export const PointToSelect = ({
 }: Props) => {
 	return (
 		<span
-			className='text-3xl lg:text-4xl hover:cursor-pointer'
+			className='text-3xl lg:text-4xl hover:cursor-pointer z-50'
 			onClick={() => handleSelectedPoint(point)}
 			key={id}
 			style={{

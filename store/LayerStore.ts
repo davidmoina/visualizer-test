@@ -10,6 +10,7 @@ interface State {
 	materialsToSelect: MaterialData[] | null;
 	selectedMaterial: MaterialData | null;
 	displayMaterials: Layers | null;
+	currentMaterials: Layers | null;
 }
 
 interface Actions {
@@ -19,6 +20,7 @@ interface Actions {
 	setMaterialsToSelect: (materials: MaterialData[] | null) => void;
 	setSelectedMaterial: (material: MaterialData) => void;
 	setDisplayMaterials: (layer: Layers) => void;
+	setCurrentMaterials: (material: Layers) => void;
 }
 
 export const useLayerStore = create<State & Actions>(set => ({
@@ -30,6 +32,7 @@ export const useLayerStore = create<State & Actions>(set => ({
 	materialsToSelect: null,
 	selectedMaterial: null,
 	displayMaterials: null,
+	currentMaterials: null,
 	setSelectedPoint: (point: PointsData | null) =>
 		set(state => ({
 			...state,
@@ -61,5 +64,12 @@ export const useLayerStore = create<State & Actions>(set => ({
 			displayMaterials: state.displayMaterials
 				? { ...state.displayMaterials, ...layer }
 				: { ...layer },
+		})),
+	setCurrentMaterials: (material: Layers) =>
+		set(state => ({
+			...state,
+			currentMaterials: state.currentMaterials
+				? { ...state.currentMaterials, ...material }
+				: { ...material },
 		})),
 }));
