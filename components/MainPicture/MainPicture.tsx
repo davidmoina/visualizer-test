@@ -1,40 +1,50 @@
 import React from 'react';
-import { useFirebase } from '../../hooks/useFirebase';
 import { PointsData } from '../../models/pointsData';
 import { useLayerStore } from '../../store/LayerStore';
-import { MaterialData } from '../../models/materialData';
 import { PointToSelect } from '../PointToSelect/PointToSelect';
 import { useState } from 'react';
 
 export const MainPicture = () => {
 	const [isSelected, setIsSelected] = useState(false);
-	const { data } = useFirebase<PointsData>('points');
-	const { data: materials } = useFirebase<MaterialData>('materials');
-	console.log(data);
-	console.log(materials);
-	const { setSelectedPoint, selectedPoint } = useLayerStore();
-
-	console.log(selectedPoint);
+	const {
+		setSelectedPoint,
+		points,
+		materials,
+		roomPicture,
+		setDisplayMaterials,
+	} = useLayerStore();
 
 	const handleSelectedPoint = (point: PointsData) => {
 		setSelectedPoint(point);
+		const filteredMaterials = materials?.filter(item =>
+			item.points.includes(point.id)
+		);
+
+		if (filteredMaterials) {
+			setDisplayMaterials(filteredMaterials);
+		}
+
 		setIsSelected(true);
 	};
 
 	const unselectPoint = () => {
 		if (isSelected) {
 			setIsSelected(false);
+			setSelectedPoint(null);
+			setDisplayMaterials(null);
 		}
 	};
 
-	const { roomPicture } = useLayerStore();
-
 	return (
 		<div className='relative' onClick={unselectPoint}>
-			<img className='rounded-md' src={roomPicture} alt='room picture' />
-			{data &&
+			<img
+				className='rounded-md w-full max-w-5xl'
+				src={roomPicture}
+				alt='room picture'
+			/>
+			{points &&
 				!isSelected &&
-				data.map(point => (
+				points.map(point => (
 					<PointToSelect
 						handleSelectedPoint={handleSelectedPoint}
 						key={point.id}

@@ -1,10 +1,31 @@
-export const MaterialCard = () => {
+import { MaterialData } from '../../models/materialData';
+// import { useLayerStore } from '../../store/LayerStore';
+
+interface Props {
+	name: string;
+	image: string;
+	material: MaterialData;
+}
+
+export const MaterialCard = ({ name, image, material }: Props) => {
+	// const {setSelectedMaterial} = useLayerStore()
+
+	const onSelectMaterial = () => {
+		console.log(material);
+	};
+
 	return (
-		<figure className='flex justify-center'>
-			{/* <img src='' alt='' /> */}
-			<div className='w-28 h-20 sm:h-24 md:h-28 bg-black rounded-l-md'></div>
-			<figcaption className='w-36 h-20 sm:h-24 md:h-28 bg-stone-700 flex items-center justify-center rounded-r-md'>
-				<span>Material</span>
+		<figure
+			onClick={onSelectMaterial}
+			className='flex justify-center outline outline-4 outline-neutral-50/[.6] bg-neutral-50/[.6] rounded-md'
+		>
+			<img
+				className='w-28 h-20 sm:h-24 md:h-28 rounded-md border-solid border-2 border-black/[.4]'
+				src={image}
+				alt={`material ${name}`}
+			/>
+			<figcaption className='text-xs w-36 h-20 sm:h-24 md:h-28 flex items-center justify-center rounded-r-md '>
+				<span>{name}</span>
 			</figcaption>
 		</figure>
 	);

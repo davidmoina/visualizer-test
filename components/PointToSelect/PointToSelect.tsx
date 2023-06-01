@@ -24,8 +24,8 @@ export const PointToSelect = ({
 			key={id}
 			style={{
 				position: 'absolute',
-				top: `${coordX}%`,
-				left: `${coordY}%`,
+				left: `${coordX}%`,
+				top: `${coordY}%`,
 			}}
 		>
 			<GrRadialSelected
